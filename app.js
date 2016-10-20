@@ -6,13 +6,13 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var dotenv = require('dotenv');
-var routes = require('./routes.js');
+var routes = require('./app/routes.js');
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
 
 
-require('./config/passport')(passport);
+require('./app/config/passport')(passport);
 
 app.use(session({
 	secret: 'secretVotingApp',
