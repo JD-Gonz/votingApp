@@ -1,8 +1,6 @@
-/* global next */
 'use strict';
 
-var db = require("./models");
-var PollHandler = require('./controllers/pollHandler.server.js');
+var DBHandler = require('./controllers/dbHandler.js');
 
 module.exports = function(app, passport) {
   function isLoggedIn (req, res, next) {
@@ -13,50 +11,28 @@ module.exports = function(app, passport) {
 		}
 	}
 	
-	var pollHandler = new PollHandler();
-  
+	var dbHandler = new DBHandler();
+	
+  app.get("/loggedin", function(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
+  });
+
   app.post("/login", passport.authenticate('local-login'), function(req, res) {
     res.json(req.user);
   });
 
   app.post("/logout", function(req, res) {
     req.logOut();
-    res.send(200);
+    res.sendStatus(200);
   });
-
-  app.get("/loggedin", function(req, res) {
-    res.send(req.isAuthenticated() ? req.user : '0');
-  });
-
-  app.post("/signup", function(req, res) {
-    db.User.findOne({
-      username: req.body.username
-    }, function(err, user) {
-      if (user) {
-        res.json(null);
-        return err;
-      } else {
-        var newUser = new db.User();
-        newUser.username = req.body.username.toLowerCase();
-        newUser.password = newUser.generateHash(req.body.password);
-        newUser.save(function(err, user) {
-          if (err) {return err;}
-          req.login(user, function(err) {
-            if (err) {
-              return next(err);
-            }
-            res.json(user);
-          });
-        });
-      }
-    });
-  }); 
+  
+  app.post("/signup", dbHandler.signUpUser);
   
   // app.route('/api/:id/clicks')
-		// .get(isLoggedIn, pollHandler.getPolls)
-		// .post(isLoggedIn, pollHandler.updatePoll)
-		// .delete(isLoggedIn, pollHandler.resetClicks);
-
+  // 	.get(isLoggedIn, dbHandler.getPolls)
+  // 	.post(isLoggedIn, dbHandler.updatePoll)
+  // 	.delete(isLoggedIn, dbHandler.resetClicks);
+  
   app.get('/auth/facebook', function authenticateFacebook (req, res, next) {
     req.session.returnTo = '/#' + req.query.returnTo; 
     next ();

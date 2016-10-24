@@ -19,7 +19,7 @@ app.controller("SignUpCtrl", function($scope, $http, $rootScope, $location) {
       $http.post('/signup', user)
         .success(function(user) {
           $rootScope.currentUser = user;
-          $location.url("/profile");
+          $location.url("/mypolls");
         });
     }
   };
@@ -29,8 +29,13 @@ app.controller("LoginCtrl", function($location, $scope, $http, $rootScope) {
   $scope.login = function(user) {
     $http.post('/login', user)
       .success(function(response) {
+        console.log("successfully logged in")
         $rootScope.currentUser = response;
-        $location.url("/profile");
+        $location.url("/mypolls");
       });
   };
+});
+
+app.controller("HomeCtrl", function($location, $scope, $http, $rootScope) {
+  
 });

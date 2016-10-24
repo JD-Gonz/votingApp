@@ -7,12 +7,16 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var dotenv = require('dotenv');
 var routes = require('./app/routes.js');
+var mongoose = require("mongoose");
 
 var app = express();
-app.use(express.static(__dirname + '/public'));
-
 
 require('./app/config/passport')(passport);
+
+mongoose.connect(process.env.MONGO_URI);
+mongoose.set("debug", true);
+
+app.use(express.static(__dirname + '/public'));
 
 app.use(session({
 	secret: 'secretVotingApp',

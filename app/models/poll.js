@@ -1,8 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var pollSchema = mongoose.Schema({
+var pollSchema = new Schema({
   title: String,
   creatorId: String,
   options: Object

@@ -1,12 +1,35 @@
-<h1>Login</h1>
-
-<p>
-	<input ng-model="user.username"/></br>
-	<input ng-model="user.password" type="password"/></br>
-	<button ng-click="login(user)">Login</button>
-</p>
-
-<p>Login or Register with:</p>
-
-<a href="/auth/facebook?returnTo={{'/profile'}}" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
-<a href="/auth/twitter?returnTo={{'/profile'}}" class="btn btn-primary"><span class="fa fa-facebook"></span> Twitter</a>
+<div clas="container">
+	<div id="loginbox" class="login col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+    <div class="panel panel-info" >
+      <div class="panel-heading">
+          <div class="panel-title">Sign In</div>
+      </div>     
+      <div class="panel-body" >
+        <form id="loginform" class="form-horizontal" role="form">
+          <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input ng-model="user.email" type="text" class="form-control" placeholder="Email">                                        
+          </div>
+          <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input ng-model="user.password" type="password" class="form-control" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12 controls">
+              <button ng-click="login(user)" class="btn btn-success">Login</button>
+              <a href="/auth/facebook?returnTo={{'/mypolls'}}" class="btn btn-primary login-btn"><span class="fa fa-facebook"></span> Login with Facebook</a>
+              <a href="/auth/twitter?returnTo={{'/mypolls'}}" class="btn btn-info login-btn"><span class="fa fa-twitter"></span> Login with Twitter</a>
+              <hr />
+              <small>
+                Don't have an account! 
+            	  <a id="signinlink" href="#signup">
+                  Sign Up Here
+            	  </a>
+          	  <small>
+            </div>
+          </div>  
+        </form>     
+        </div>                     
+      </div>  
+    </div>
+</div>

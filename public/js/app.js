@@ -7,7 +7,8 @@ app.config(function($routeProvider) {
   
   $routeProvider
     .when('/home', {
-      templateUrl: 'views/home.html'
+      templateUrl: 'views/home.html',
+      controller: 'HomeCtrl'
     })
     .when('/login', {
       templateUrl: 'views/login.html',
@@ -17,8 +18,14 @@ app.config(function($routeProvider) {
       templateUrl: 'views/signup.html',
       controller: 'SignUpCtrl'
     })
-    .when('/profile', {
-      templateUrl: 'views/profile.html',
+    .when('/mypolls', {
+      templateUrl: 'views/myPolls.html',
+      resolve: {
+        logincheck: checkLoggedin
+      }
+    })
+    .when('/newpoll', {
+      templateUrl: 'views/newPoll.html',
       resolve: {
         logincheck: checkLoggedin
       }
