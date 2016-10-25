@@ -1,13 +1,9 @@
 <h1>Profile</h1>
 
-<h3>User: {{ currentUser.username || currentUser.facebook.name }}</h3>
+<h3>User: {{ currentUser.facebook.name || currentUser.twitter.name || currentUser.firstName +" "+ currentUser.lastName }}</h3>
 
-<p>{{currentUser.facebook.id}}</p>
-<p>{{currentUser.facebook.name}}</p>
-<p>{{currentUser.facebook.token}}</p>
-
-<p>---------------------------------------------</p>
-
-<p>{{currentUser.twitter.id}}</p>
-<p>{{currentUser.twitter.name}}</p>
-<p>{{currentUser.twitter.token}}</p>
+<div data-ng-init="getMyPolls()">
+  <div ng-repeat="poll in polls">
+    <button ng-click="customNavigate(poll._id)">{{poll}}</button>
+  </div>
+</div>

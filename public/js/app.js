@@ -10,9 +10,12 @@ app.config(function($routeProvider) {
       templateUrl: 'views/home.html',
       controller: 'HomeCtrl'
     })
-    .when('/polls/:id', {
-      templateUrl: 'views/poll.html',
-      controller: 'PollCtrl'
+    .when('/profile', {
+      templateUrl: 'views/profile.html',
+      controller: 'ProfileCtrl',
+      resolve: {
+        logincheck: checkLoggedin
+      }
     })
     .when('/login', {
       templateUrl: 'views/login.html',
@@ -22,19 +25,16 @@ app.config(function($routeProvider) {
       templateUrl: 'views/signup.html',
       controller: 'SignUpCtrl'
     })
-    .when('/profile', {
-      templateUrl: 'views/profile.html',
-      controller: 'ProfileCtrl',
-      resolve: {
-        logincheck: checkLoggedin
-      }
-    })
     .when('/newpoll', {
       templateUrl: 'views/newPoll.html',
       controller: 'NewPollCtrl',
       resolve: {
         logincheck: checkLoggedin
       }
+    })
+    .when('/polls/:id', {
+      templateUrl: 'views/poll.html',
+      controller: 'PollCtrl'
     })
     .otherwise({
       redirectTo: '/'

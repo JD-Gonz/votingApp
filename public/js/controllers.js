@@ -48,6 +48,19 @@ app.controller("HomeCtrl", function($rootScope, $scope, $http, $location) {
     }
 });
 
+app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location) {
+  $scope.getMyPolls = function() {
+    $http.get('/api/'+ $rootScope.currentUser._id +'/polls')
+      .success(function(response) {
+        $scope.polls = response;
+      });
+  };
+  
+  $scope.customNavigate=function(id){
+       $location.path("/polls/"+id)
+    }
+});
+
 app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location) {
   $scope.createPoll = function(poll) {
     var optionsObject = [];
@@ -67,9 +80,6 @@ app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location) {
   };
 });
 
-app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location, $routeParams) {
-  
-});
 
 app.controller("PollCtrl", function($rootScope, $scope, $http, $location, $routeParams) {
   $scope.id = $routeParams.id;

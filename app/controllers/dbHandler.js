@@ -8,7 +8,7 @@ function PollHandler () {
 
 	this.getPoll = function (req, res) {
 		Poll
-			.findOne({ 'title': req.poll.title })
+			.findOne({ '_id': req.poll._id })
 			.exec(function (err, result) {
 					if (err) { throw err; }
 					res.json(result);
@@ -17,7 +17,7 @@ function PollHandler () {
 	
 	this.getUserPolls = function (req, res) {
 		Poll
-			.find({})
+			.find({ 'creatorId': req.params.id })
 			.exec(function (err, result) {
 				if (err) { throw err; }
 				res.json(result);

@@ -6,6 +6,9 @@
       <input type="text" class="form-control" placeholder="Search Polls" aria-describedby="basic-addon1">
     </div>
   </div>
-  <button ng-click="customNavigate('123456789')">Rename Show</button>
-  <div data-ng-init="getPolls()">{{polls}}</div>
+  <div data-ng-init="getPolls()">
+    <div ng-repeat="poll in polls">
+    <button ng-click="customNavigate(poll._id)">{{poll}}</button>
+    </div>
+  </div>
 </div>
