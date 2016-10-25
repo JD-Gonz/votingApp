@@ -4,9 +4,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var pollSchema = new Schema({
-  title: String,
   creatorId: String,
-  options: Object
+  title: String,
+  question: String,
+  customOption: Boolean,
+  options: Array
 });
 
 module.exports = mongoose.model('Poll', pollSchema);

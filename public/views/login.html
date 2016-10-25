@@ -17,12 +17,12 @@
           <div class="form-group">
             <div class="col-sm-12 controls">
               <button ng-click="login(user)" class="btn btn-success">Login</button>
-              <a href="/auth/facebook?returnTo={{'/mypolls'}}" class="btn btn-primary login-btn"><span class="fa fa-facebook"></span> Login with Facebook</a>
-              <a href="/auth/twitter?returnTo={{'/mypolls'}}" class="btn btn-info login-btn"><span class="fa fa-twitter"></span> Login with Twitter</a>
+              <a ng-href="/auth/facebook?returnTo={{'/profile'}}" class="btn btn-primary login-btn"><span class="fa fa-facebook"></span> Login with Facebook</a>
+              <a ng-href="/auth/twitter?returnTo={{'/profile'}}" class="btn btn-info login-btn"><span class="fa fa-twitter"></span> Login with Twitter</a>
               <hr />
               <small>
                 Don't have an account! 
-            	  <a id="signinlink" href="#signup">
+            	  <a id="signinlink" ng-href="#/signup">
                   Sign Up Here
             	  </a>
           	  <small>

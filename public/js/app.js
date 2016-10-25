@@ -6,9 +6,13 @@ var app = angular.module("VotingApp", ["ngRoute"]);
 app.config(function($routeProvider) {
   
   $routeProvider
-    .when('/home', {
+    .when('/', {
       templateUrl: 'views/home.html',
       controller: 'HomeCtrl'
+    })
+    .when('/polls/:id', {
+      templateUrl: 'views/poll.html',
+      controller: 'PollCtrl'
     })
     .when('/login', {
       templateUrl: 'views/login.html',
@@ -18,20 +22,22 @@ app.config(function($routeProvider) {
       templateUrl: 'views/signup.html',
       controller: 'SignUpCtrl'
     })
-    .when('/mypolls', {
-      templateUrl: 'views/myPolls.html',
+    .when('/profile', {
+      templateUrl: 'views/profile.html',
+      controller: 'ProfileCtrl',
       resolve: {
         logincheck: checkLoggedin
       }
     })
     .when('/newpoll', {
       templateUrl: 'views/newPoll.html',
+      controller: 'NewPollCtrl',
       resolve: {
         logincheck: checkLoggedin
       }
     })
     .otherwise({
-      redirectTo: '/home'
+      redirectTo: '/'
     });
 });
 

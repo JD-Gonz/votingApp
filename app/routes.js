@@ -28,10 +28,16 @@ module.exports = function(app, passport) {
   
   app.post("/signup", dbHandler.signUpUser);
   
-  // app.route('/api/:id/clicks')
-  // 	.get(isLoggedIn, dbHandler.getPolls)
-  // 	.post(isLoggedIn, dbHandler.updatePoll)
-  // 	.delete(isLoggedIn, dbHandler.resetClicks);
+  app.get("/api/polls", dbHandler.getPolls);
+  
+  app.route('/api/:id/polls')
+  	.get(isLoggedIn, dbHandler.getUserPolls)
+  	.post(isLoggedIn, dbHandler.addPoll);
+  
+  app.route('/api/poll/:id')
+  	.get(isLoggedIn, dbHandler.getPoll)
+  	.post(isLoggedIn, dbHandler.updatePoll)
+  	.delete(isLoggedIn, dbHandler.deletePoll);
   
   app.get('/auth/facebook', function authenticateFacebook (req, res, next) {
     req.session.returnTo = '/#' + req.query.returnTo; 

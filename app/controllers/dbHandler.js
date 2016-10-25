@@ -6,39 +6,57 @@ var Poll = require('../models/poll.js');
 
 function PollHandler () {
 
-	this.getPolls = function (req, res) {
+	this.getPoll = function (req, res) {
 		Poll
-			.findOne({ 'github.id': req.user.github.id }, { '_id': false })
-			.exec(function (err, result) {
-				if (err) { throw err; }
-				res.json(result.nbrClicks);
-			});
-	};
-
-	this.addPoll = function (req, res) {
-		Poll
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { $inc: { 'nbrClicks.clicks': 1 } })
+			.findOne({ 'title': req.poll.title })
 			.exec(function (err, result) {
 					if (err) { throw err; }
-					res.json(result.nbrClicks);
+					res.json(result);
+			});
+	};
+	
+	this.getUserPolls = function (req, res) {
+		Poll
+			.find({})
+			.exec(function (err, result) {
+				if (err) { throw err; }
+				res.json(result);
+			});
+	};
+	
+	this.getPolls = function (req, res) {
+		Poll
+			.find({})
+			.exec(function (err, result) {
+				if (err) { throw err; }
+				res.json(result);
+			});
+	};
+	
+	this.addPoll = function (req, res) {
+		Poll
+			.insertOne(req.poll)
+			.exec(function (err, result) {
+				if (err) { throw err; }
+				res.json(result);
 			});
 	};
 
 	this.updatePoll = function (req, res) {
 		Poll
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { 'nbrClicks.clicks': 0 })
+			.findOneAndUpdate({ '_id': req.user._id }, req.user)
 			.exec(function (err, result) {
 					if (err) { throw err; }
-					res.json(result.nbrClicks);
+					res.json(result);
 			});
 	};
 	
 	this.deletePoll = function (req, res) {
 		Poll
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { 'nbrClicks.clicks': 0 })
+			.deleteOne({ '_id': req.user._id })
 			.exec(function (err, result) {
 					if (err) { throw err; }
-					res.json(result.nbrClicks);
+					res.json(result);
 			});
 	};
 	
@@ -50,7 +68,7 @@ function PollHandler () {
 	        res.json(null);
 	        return err;
 	      } else {
-	        var newUser = new db.User();
+	        var newUser = new User();
 	        newUser.email = req.user.email.toLowerCase();
 	        newUser.firstName = req.user.fName;
 	        newUser.lastName = req.user.lName;
@@ -67,7 +85,6 @@ function PollHandler () {
       	}
     	});
   }; 
-
 }
 
 module.exports = PollHandler;

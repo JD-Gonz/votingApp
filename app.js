@@ -13,6 +13,7 @@ var app = express();
 
 require('./app/config/passport')(passport);
 
+mongoose.Promise = require('bluebird');
 mongoose.connect(process.env.MONGO_URI);
 mongoose.set("debug", true);
 

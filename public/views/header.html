@@ -1,6 +1,6 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header pull-left">     
-		<a class="navbar-brand" href="#">Pollapalooza! </a>
+		<a class="navbar-brand" ng-href="#/">Pollapalooza! </a>
 	</div>
 	<div class="navbar-header pull-right">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -9,16 +9,16 @@
 			<span class="icon-bar"></span>
 		</button>
 		<div class="navbar-header navbar-userlinks pull-right">
-			<a ng-if="!currentUser" class="navbar-link userlink" href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-			<a ng-if="!currentUser" class="navbar-link userlink" href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-			<a ng-if="currentUser" class="navbar-link userlink" href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+			<a ng-if="!currentUser" class="navbar-link userlink" ng-href="#/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+			<a ng-if="!currentUser" class="navbar-link userlink" ng-href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+			<a ng-if="currentUser" class="navbar-link userlink" ng-href="#/" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
 		</div>
 	</div>
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			<li><a href="#home">Home</a></li>
-			<li><a ng-if="currentUser" href="#mypolls">My Polls</a></li>
-			<li><a ng-if="currentUser" href="#newpoll">New Poll</a></li>
+			<li><a ng-href="#/home">Home</a></li>
+			<li><a ng-if="currentUser" ng-href="#/profile">Profile</a></li>
+			<li><a ng-if="currentUser" ng-href="#/newpoll">New Poll</a></li>
 		</ul>
 	</div>
 </div>
