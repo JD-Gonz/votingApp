@@ -1,3 +1,24 @@
 <h1>Poll view</h1>
 
-<h3>Route ID = {{id}}</h3>
+<div class="container">
+  <div data-ng-init="getPoll()">
+    <div class="row">
+    <div class="col-sm-6">
+      <h3>Route ID = {{poll._id}}</h3>
+      <h3>{{poll.title}}</p>
+      <h3>{{poll.creator.id}}</h3>
+      <h3>{{poll.question}}</h3>
+      <p>Choose an option:</p>
+      <select ng-model="choice">
+        <option ng-repeat="option in poll.options" value="{{option.option}}">{{option.option}}</option>
+        <option ng-if="poll.customOption" value="customOption">Create your own...</option>
+      </select>
+      <input ng-if="choice === 'customOption'" type="text" ng-model="user.option"/>
+      <button ng-disabled="user.voted" ng-click="vote()"> VOTE</button>
+    </div>
+    <div class="col-sm-6">
+      <p ng-if="user.voted" ng-repeat="option in poll.options">{{option.option}} | Votes = {{option.votes}}</option>
+    </div>
+      
+  </div>
+</div>

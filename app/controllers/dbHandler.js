@@ -4,11 +4,11 @@
 var User = require('../models/user.js');
 var Poll = require('../models/poll.js');
 
-function PollHandler () {
+function DBHandler () {
 
 	this.getPoll = function (req, res) {
 		Poll
-			.findOne({ '_id': req.poll._id })
+			.findOne({ '_id': req.params.id })
 			.exec(function (err, result) {
 					if (err) { throw err; }
 					res.json(result);
@@ -34,17 +34,21 @@ function PollHandler () {
 	};
 	
 	this.addPoll = function (req, res) {
-		Poll
-			.insertOne(req.poll)
-			.exec(function (err, result) {
-				if (err) { throw err; }
-				res.json(result);
-			});
+		var newPoll = new Poll();
+    newPoll.title    = req.body.title;                  
+    newPoll.question = req.body.question;
+    newPoll.options = req.body.options;
+    newPoll.customOption  = req.body.customOption;
+    newPoll.creatorId  = req.body.creatorId;
+    newPoll.save(function(err) {
+      if (err) { throw err;}
+      res.json(newPoll._id);
+    });
 	};
 
 	this.updatePoll = function (req, res) {
 		Poll
-			.findOneAndUpdate({ '_id': req.user._id }, req.user)
+			.findOneAndUpdate({ '_id': req.params.id }, {$set:{'options': req.body.options}}, {new: true})
 			.exec(function (err, result) {
 					if (err) { throw err; }
 					res.json(result);
@@ -87,4 +91,4 @@ function PollHandler () {
   }; 
 }
 
-module.exports = PollHandler;
+module.exports = DBHandler;

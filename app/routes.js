@@ -7,7 +7,7 @@ module.exports = function(app, passport) {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
-			res.redirect('/login');
+			res.redirect('#/login');
 		}
 	}
 	
@@ -35,8 +35,8 @@ module.exports = function(app, passport) {
   	.post(isLoggedIn, dbHandler.addPoll);
   
   app.route('/api/poll/:id')
-  	.get(isLoggedIn, dbHandler.getPoll)
-  	.post(isLoggedIn, dbHandler.updatePoll)
+  	.get(dbHandler.getPoll)
+  	.post(dbHandler.updatePoll)
   	.delete(isLoggedIn, dbHandler.deletePoll);
   
   app.get('/auth/facebook', function authenticateFacebook (req, res, next) {

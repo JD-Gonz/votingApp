@@ -1,4 +1,4 @@
-/* global angular app */
+/* global app */
 'use strict';
 
 app.controller("NavCtrl", function($rootScope, $scope, $http, $location) {
@@ -61,18 +61,13 @@ app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location) {
     }
 });
 
-app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location) {
+app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location, VoteService) {
   $scope.createPoll = function(poll) {
-    var optionsObject = [];
-    angular.forEach(poll.options.split(','), function(value) {
-      this.push({"option":value.trim(), "votes": 0});
-    }, optionsObject);
-    
-    poll.options = optionsObject;
+    poll.options = VoteService.createOptions(poll);
     poll.creatorId = $rootScope.currentUser._id;
-    console.log(JSON.stringify(poll))
+    console.log(poll)
     
-    $http.post('/api/' + $rootScope.currentUser._id + '/polls', JSON.stringify(poll))
+    $http.post('/api/' + $rootScope.currentUser._id + '/polls', poll)
       .success(function(response) {
         console.log(response)
         $location.url("/");
@@ -81,7 +76,20 @@ app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location) {
 });
 
 
-app.controller("PollCtrl", function($rootScope, $scope, $http, $location, $routeParams) {
-  $scope.id = $routeParams.id;
+app.controller("PollCtrl", function( $scope, $http, $location, $routeParams, VoteService) {
+  $scope.user = {"voted": false};
+  $scope.getPoll = function() {
+    $http.get('/api/poll/' + $routeParams.id)
+      .success(function(response) {
+        $scope.poll = response;
+      });
+  };
+  $scope.vote = function() {
+    $scope.poll = VoteService.vote($scope.poll, $scope.choice, $scope.user.option);
+    $http.post('/api/poll/' + $routeParams.id,  $scope.poll)
+      .success(function(response) {
+        $scope.poll = response;
+        $scope.user.voted = true;
+      });
+  };
 });
-
