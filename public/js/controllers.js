@@ -19,7 +19,7 @@ app.controller("SignUpCtrl", function($rootScope, $scope, $http, $location, $tim
       $http.post('/signup', $scope.user)
         .success(function(user) {
           $rootScope.currentUser = user;
-          $location.url("/mypolls");
+          $location.url("/profile");
         })
         .error(function (error, status){
           $scope.errorMessage = error;
@@ -40,18 +40,16 @@ app.controller("LoginCtrl", function($rootScope, $scope, $http, $location, $time
   $scope.loginParams = VoteSvc.getUser();
   $scope.user = {};
   $scope.login = function() {
-    console.log($scope.user)
     $http.post('/login', $scope.user)
       .success(function(response) {
         $rootScope.currentUser = response;
-        $location.url("/mypolls");
+        $location.url("/profile");
       })
       .error(function (error, status){
-        console.log({'error': error, 'status': status})
-        $scope.errorMessage = error;
+        $scope.errorMessage = "Incorrect username or password entered. Please try again.";
         $timeout(function(){
           $scope.errorMessage = undefined;
-        }, 2500);
+        }, 4000);
       });
   };
 });
