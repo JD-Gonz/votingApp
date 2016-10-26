@@ -38,6 +38,10 @@ ng-cloak {
   display: none !important;
 }
 
+.alert {
+   padding: 5px 15px;    
+}
+
 /****** Header Styling ******/
 
 header p {
@@ -82,7 +86,7 @@ header a ~ p {
 .btn {	/* Styling for buttons */
 	margin: 5px 8px;
 	color: white;
-	background-color: #988d9e;
+	background-color: #4f4f4f;
 	display: inline-block;
 	border: 0;
 	font-size: 14px;
@@ -117,12 +121,8 @@ header a ~ p {
 	margin-top: 50px;
 }
 
-#loginform .input-group {
-	padding-top: 15px;
-}
-
-#loginform .form-group {
-	margin-top: 45px;
+#loginForm .controls {
+	margin-top: 35px;
 }
 
 .login-btn {
@@ -138,6 +138,11 @@ header a ~ p {
 .btn > img {
 	float: left;
 	margin-left: 10px
+}
+
+.help-block {
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 
 

@@ -15,18 +15,18 @@ function DBHandler () {
 			});
 	};
 	
-	this.getUserPolls = function (req, res) {
+	this.getPolls = function (req, res) {
 		Poll
-			.find({ 'creatorId': req.params.id })
+			.find({})
 			.exec(function (err, result) {
 				if (err) { throw err; }
 				res.json(result);
 			});
 	};
 	
-	this.getPolls = function (req, res) {
+	this.getUserPolls = function (req, res) {
 		Poll
-			.find({})
+			.find({ 'creatorId': req.params.id })
 			.exec(function (err, result) {
 				if (err) { throw err; }
 				res.json(result);
@@ -57,7 +57,7 @@ function DBHandler () {
 	
 	this.deletePoll = function (req, res) {
 		Poll
-			.deleteOne({ '_id': req.user._id })
+			.findOneAndRemove({ '_id': req.params.id })
 			.exec(function (err, result) {
 					if (err) { throw err; }
 					res.json(result);
@@ -66,17 +66,17 @@ function DBHandler () {
 	
 	this.signUpUser = function (req, res) {
 		User
-			.findOne({ 'username': req.user.email }) 
+			.findOne({ 'email': req.body.email }) 
 			.exec(function(err, user) {
 	    	if (user) {
-	        res.json(null);
+	       res.status(400).send('Email address aready exists.');
 	        return err;
 	      } else {
 	        var newUser = new User();
-	        newUser.email = req.user.email.toLowerCase();
-	        newUser.firstName = req.user.fName;
-	        newUser.lastName = req.user.lName;
-	        newUser.password = newUser.generateHash(req.user.password);
+	        newUser.email = req.body.email.toLowerCase();
+	        newUser.firstName = req.body.fName;
+	        newUser.lastName = req.body.lName;
+	        newUser.password = newUser.generateHash(req.body.password);
 	        newUser.save(function(err, user) {
 	          if (err) {return err;}
 	          req.login(user, function(err) {

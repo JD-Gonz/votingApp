@@ -1,7 +1,7 @@
 /* global angular */
 'use strict';
 
-var app = angular.module("VotingApp", ["ngRoute"]);
+var app = angular.module("VotingApp", ["ngRoute", "ngMessages"]);
 
 app.config(function($routeProvider) {
   

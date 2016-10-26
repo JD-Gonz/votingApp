@@ -16,10 +16,13 @@ module.exports = function(passport) {
     done(null, user);
   });
 
-	passport.use('local-login', new LocalStrategy(
+	passport.use('local-login', new LocalStrategy({
+  	  usernameField: 'email',
+      passwordField: 'password'
+    },
 	  function(username, password, done) {
 	    User.findOne({
-	      username: username.toLowerCase()
+	      email: username.toLowerCase()
 	    }, function(err, user) {
           if (err) {
             return done(err);

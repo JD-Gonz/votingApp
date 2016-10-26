@@ -5,18 +5,29 @@
           <div class="panel-title">Sign In</div>
       </div>     
       <div class="panel-body" >
-        <form id="loginform" class="form-horizontal" role="form">
-          <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input ng-model="user.email" type="text" class="form-control" placeholder="Email">                                        
-          </div>
-          <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input ng-model="user.password" type="password" class="form-control" placeholder="Password">
+        <div ng-if="errorMessage" class="alert alert-danger fade in">
+          <a class="close" data-dismiss="alert">&times;</a>
+          <strong>Error!</strong> {{errorMessage}}
+        </div>
+        <ng-form id="loginForm" name="loginForm" class="form-horizontal" role="form">
+          <div class="form-group" ng-repeat="param in loginParams" ng-class="{ 'has-error' : loginForm[param.name].$invalid && !loginForm[param.name].$pristine }">
+            <div class="input-group col-xs-10 col-xs-offset-1">
+              <span class="input-group-addon"><i class="{{param.icon}}"></i></span>
+              <input 
+                ng-model="user[param.name]" 
+                type="{{param.type}}"
+                name="{{param.name}}"
+                class="form-control" 
+                placeholder="{{param.placeholder}}"
+                required />
+            </div>
+            <div class="col-xs-10 col-xs-offset-1 help-block" ng-show="loginForm[param.name].$invalid && !loginForm[param.name].$pristine">
+              <small>{{param.helpMessage}}</small>
+            </div>
           </div>
           <div class="form-group">
             <div class="col-sm-12 controls">
-              <button ng-click="login(user)" class="btn btn-success">Login</button>
+              <button type="submit" ng-disabled="loginForm.$invalid" ng-click="login()" class="btn btn-success">Login</button>
               <a ng-href="/auth/facebook?returnTo={{'/profile'}}" class="btn btn-primary login-btn"><span class="fa fa-facebook"></span> Login with Facebook</a>
               <a ng-href="/auth/twitter?returnTo={{'/profile'}}" class="btn btn-info login-btn"><span class="fa fa-twitter"></span> Login with Twitter</a>
               <hr />
@@ -25,7 +36,7 @@
             	  <a id="signinlink" ng-href="#/signup">
                   Sign Up Here
             	  </a>
-          	  <small>
+          	  </small>
             </div>
           </div>  
         </form>     
