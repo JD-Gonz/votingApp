@@ -1,13 +1,17 @@
 /* global app */
 'use strict';
 
-app.controller("NavCtrl", function($rootScope, $scope, $http, $location) {
+app.controller("NavCtrl", function($rootScope, $scope, $http, $location, NavSvc) {
   $scope.logout = function() {
     $http.post("/logout")
       .success(function() {
         $rootScope.currentUser = null;
-        $location.url("/home");
+        $location.url("/");
       });
+  };
+  
+  $scope.collapseNav = function() {
+    NavSvc.collapseNav();
   };
 });
 
@@ -19,7 +23,7 @@ app.controller("SignUpCtrl", function($rootScope, $scope, $http, $location, $tim
       $http.post('/signup', $scope.user)
         .success(function(user) {
           $rootScope.currentUser = user;
-          $location.url("/profile");
+          $location.url("/home");
         })
         .error(function (error, status){
           $scope.errorMessage = error;
@@ -43,7 +47,7 @@ app.controller("LoginCtrl", function($rootScope, $scope, $http, $location, $time
     $http.post('/login', $scope.user)
       .success(function(response) {
         $rootScope.currentUser = response;
-        $location.url("/profile");
+        $location.url("/home");
       })
       .error(function (error, status){
         $scope.errorMessage = "Incorrect username or password entered. Please try again.";
@@ -54,7 +58,7 @@ app.controller("LoginCtrl", function($rootScope, $scope, $http, $location, $time
   };
 });
 
-app.controller("HomeCtrl", function($rootScope, $scope, $http, $location) {
+app.controller("HomeCtrl", function($rootScope, $scope, $http, $location, VoteSvc) {
   $scope.getPolls = function() {
     $http.get('/api/polls')
       .success(function(response) {
@@ -62,9 +66,17 @@ app.controller("HomeCtrl", function($rootScope, $scope, $http, $location) {
       });
   };
   
+  $scope.totalVotes = function(options) {
+    return VoteSvc.getTotal(options);
+  };
+  
+  $scope.filterVotes = function(options) {
+    return VoteSvc.getTotal(options);
+  };
+  
   $scope.customNavigate=function(id){
-       $location.path("/polls/"+id)
-    }
+       $location.path("/polls/"+id);
+    };
 });
 
 app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location) {
@@ -76,8 +88,8 @@ app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location) {
   };
   
   $scope.customNavigate=function(id){
-       $location.path("/polls/"+id)
-    }
+       $location.path("/polls/"+id);
+    };
 });
 
 app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location, VoteSvc) {
@@ -91,7 +103,6 @@ app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location, Vot
       });
   };
 });
-
 
 app.controller("PollCtrl", function( $scope, $http, $location, $routeParams, VoteSvc) {
   $scope.user = {"voted": false};

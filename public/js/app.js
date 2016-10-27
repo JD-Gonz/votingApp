@@ -1,4 +1,4 @@
-/* global angular */
+/* global $ angular */
 'use strict';
 
 var app = angular.module("VotingApp", ["ngRoute", "ngMessages"]);
@@ -57,3 +57,4 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
   });
   return deferred.promise;
 };
+

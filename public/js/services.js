@@ -41,17 +41,28 @@ app.factory("VoteSvc", function() {
     return optionsObject;
   };
   
+  this.getTotal = function(options) {
+    var total = 0;
+    angular.forEach(options, function(option) {
+      total += option.votes;
+    });
+    return parseInt(total);
+  };
+  
   return {
       vote: this.vote,
       createUser: this.createUser,
       getUser: this.getUser,
-      createOptions: this.createOptions
+      createOptions: this.createOptions,
+      getTotal: this.getTotal
   };
 });
 
-app.factory("ErrorSvc", function() {
-  
+app.factory("NavSvc", function() {
+  this.collapseNav = function() {
+    angular.element(document.querySelector("#navbar")).removeClass("in");
+  };
   return {
-    
+    collapseNav: this.collapseNav
   };
 });
