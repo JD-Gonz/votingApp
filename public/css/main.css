@@ -20,8 +20,8 @@ body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
 	margin: 0;
-	padding-top: 70px;
-	background-color: #97CDBD;
+	padding: 70px 0 20px 0;
+	background-color: #CCDDE2;
 }
 
 header {
@@ -41,6 +41,15 @@ ng-cloak {
 
 .alert {
    padding: 5px 15px;    
+}
+
+.container {
+	background-color: #E8EBE4;
+	padding: 1.5em;
+}
+
+.jumbotron {
+	background-color: #8298BC;
 }
 
 /****** Header Styling ******/
@@ -158,8 +167,13 @@ header a ~ p {
 
 /****** Home Styling ******/
 
-.jumbotron {
-	background-color: #d9edf7;
+.content-body {
+	background-color: white;
+  border-radius: 6px;
+}
+
+.poll-header {
+	width: 90%;
 }
 
 .btn-poll {
@@ -168,8 +182,9 @@ header a ~ p {
 	border: 0;
 	border-radius: 5px;
 	margin: 4px 0;
-	padding: 10px 5px;
+	padding: 10px 0;
 	font-weight: 500;
+	width: 100%;
 }
 
 .btn-poll:hover {

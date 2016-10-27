@@ -36,7 +36,9 @@ app.factory("VoteSvc", function() {
   this.createOptions = function(poll){
     var optionsObject = [];
     angular.forEach(poll.options.split(','), function(value) {
-      this.push({"option":value.trim(), "votes": 0});
+      if (value.length > 0) {
+        this.push({"option":value.trim(), "votes": 0});
+      }
     }, optionsObject);
     return optionsObject;
   };
@@ -46,7 +48,7 @@ app.factory("VoteSvc", function() {
     angular.forEach(options, function(option) {
       total += option.votes;
     });
-    return parseInt(total);
+    return total;
   };
   
   return {
