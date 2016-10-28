@@ -7,12 +7,12 @@
     </div>
   </div>
   <div data-ng-init="getPolls()">
-    <h3 class="text-center col-xs-2 control-label">Total Votes</h3>
-    <h3 class="text-center col-xs-9">Poll titles</h3>
+    <h3 class="text-center col-xs-2">Total Votes</h3>
+    <h3 class="text-center col-xs-10">Poll titles</h3>
     <div ng-repeat="poll in polls | orderByVotes | searchPolls:searchString">
     <button type="button" class="btn-poll btn-block" ng-click="customNavigate(poll._id)">
       <label class="col-xs-2 control-label">{{totalVotes(poll.options)}}</label>
-      <label class="col-xs-9">{{poll.title}}</label>
+      <label class="col-xs-10">{{poll.title}}</label>
     </button>
     </div>
   </div>

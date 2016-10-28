@@ -18,6 +18,7 @@ app.controller("NavCtrl", function($rootScope, $scope, $http, $location, NavSvc)
 app.controller("SignUpCtrl", function($rootScope, $scope, $http, $location, $timeout, VoteSvc) {
   $scope.signupParams = VoteSvc.createUser();
   $scope.user = {};
+  
   $scope.signup = function() {
     if ($scope.user.password === $scope.user.password2) {
       $http.post('/signup', $scope.user)
@@ -43,6 +44,7 @@ app.controller("SignUpCtrl", function($rootScope, $scope, $http, $location, $tim
 app.controller("LoginCtrl", function($rootScope, $scope, $http, $location, $timeout, VoteSvc) {
   $scope.loginParams = VoteSvc.getUser();
   $scope.user = {};
+  
   $scope.login = function() {
     $http.post('/login', $scope.user)
       .success(function(response) {
@@ -106,12 +108,17 @@ app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location, Vot
 
 app.controller("PollCtrl", function( $scope, $http, $location, $routeParams, VoteSvc) {
   $scope.user = {"voted": false};
+  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+  $scope.data = [500, 500, 100];
+  $scope.options = {legend: {display: true}};
+  
   $scope.getPoll = function() {
     $http.get('/api/poll/' + $routeParams.id)
       .success(function(response) {
         $scope.poll = response;
       });
   };
+  
   $scope.vote = function() {
     $scope.poll = VoteSvc.vote($scope.poll, $scope.choice, $scope.user.option);
     $http.post('/api/poll/' + $routeParams.id,  $scope.poll)

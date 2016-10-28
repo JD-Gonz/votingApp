@@ -1,9 +1,9 @@
 /* global $ angular */
 'use strict';
 
-var app = angular.module("VotingApp", ["ngRoute", "ngMessages"]);
+var app = angular.module("VotingApp", ["ngRoute", "chart.js"]);
 
-app.config(function($routeProvider) {
+app.config(function($routeProvider, ChartJsProvider ) {
   
   $routeProvider
     .when('/', {
@@ -39,6 +39,8 @@ app.config(function($routeProvider) {
     .otherwise({
       redirectTo: '/'
     });
+    
+  ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 });
 
 var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
