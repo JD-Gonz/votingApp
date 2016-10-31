@@ -108,14 +108,21 @@ app.controller("NewPollCtrl", function($rootScope, $scope, $http, $location, Vot
 
 app.controller("PollCtrl", function( $scope, $http, $location, $routeParams, VoteSvc) {
   $scope.user = {"voted": false};
-  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-  $scope.data = [500, 500, 100];
   $scope.options = {legend: {display: true}};
   
   $scope.getPoll = function() {
     $http.get('/api/poll/' + $routeParams.id)
       .success(function(response) {
-        $scope.poll = response;
+        $scope.poll = VoteSvc.setChartValues(response);
+        $scope.labels = VoteSvc.getLabels();
+        $scope.data = VoteSvc.getData();
+      });
+  };
+  
+  $scope.deletePoll = function() {
+    $http.delete('/api/poll/' + $routeParams.id)
+      .success(function(response) {
+        $location.url("/");
       });
   };
   
@@ -123,7 +130,9 @@ app.controller("PollCtrl", function( $scope, $http, $location, $routeParams, Vot
     $scope.poll = VoteSvc.vote($scope.poll, $scope.choice, $scope.user.option);
     $http.post('/api/poll/' + $routeParams.id,  $scope.poll)
       .success(function(response) {
-        $scope.poll = response;
+        $scope.poll = VoteSvc.setChartValues(response);
+        $scope.labels = VoteSvc.getLabels();
+        $scope.data = VoteSvc.getData();
         $scope.user.voted = true;
       });
   };

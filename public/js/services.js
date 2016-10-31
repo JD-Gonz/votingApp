@@ -7,7 +7,11 @@ app.factory("VoteSvc", function() {
   {name:"fName", type:"text", label:"First Name", placeholder:"First Name", helpMessage:"Your first name is required!"}, 
   {name:"lName", type:"text", label:"Last Name", placeholder:"Last Name", helpMessage:"Your last name is required!"}, 
   {name:"password", type:"password", label:"Password", placeholder:"Password", helpMessage:"Your password is required!", icon:"glyphicon glyphicon-lock"}, 
-  {name:"password2", type:"password", label:"Password", placeholder:"Retype Password", helpMessage:"Please retype your password."}];
+  {name:"password2", type:"password", label:"Password", placeholder:"Confirm Password", helpMessage:"Please confirm  your password."}];
+  
+  var pollData = [];
+    
+  var pollLabels = [];
   
   this.vote = function(poll, choice, userOption){
     if (choice === "customOption") {
@@ -20,6 +24,24 @@ app.factory("VoteSvc", function() {
       });
     }
     return poll;
+  };
+  
+  this.setChartValues = function(poll) {
+    pollData = [];
+    pollLabels = [];
+    angular.forEach(poll.options, function(option) {
+        pollData.push(option.votes);
+        pollLabels.push(option.option);
+      });
+    return poll;
+  };
+  
+  this.getLabels = function() {
+    return pollLabels;
+  };
+  
+  this.getData = function() {
+    return pollData;  
   };
   
   this.createUser = function() {
@@ -53,6 +75,9 @@ app.factory("VoteSvc", function() {
   
   return {
       vote: this.vote,
+      setChartValues: this.setChartValues,
+      getLabels: this.getLabels,
+      getData: this.getData,
       createUser: this.createUser,
       getUser: this.getUser,
       createOptions: this.createOptions,

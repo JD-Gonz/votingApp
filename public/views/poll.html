@@ -2,31 +2,38 @@
   <div data-ng-init="getPoll()">
     <h2 class="text-center"><strong><em><u>{{poll.title}}</u></em></strong></h2>
     <div class="row">
-    <div class="col-sm-6">
-      <h3>{{poll.question}}</h3>
-      <p>Choose an option:</p>
-      <div class="poll-input-group">
-        <select class="col-xs-10 poll-input"  ng-model="choice">
-          <option ng-repeat="option in poll.options" value="{{option.option}}">{{option.option}}</option>
-          <option ng-if="poll.customOption" value="customOption">Create your own...</option>
-        </select>
-        <input class="col-xs-10 poll-input" ng-if="choice === 'customOption'" type="text" ng-model="user.option"/>
+      <div class="col-sm-6">
+        <form name="voteForm">
+          <h3>{{poll.question}}</h3>
+          <p>Choose an option:</p>
+          <div class="row poll-input-group">
+            <select class="col-xs-10 poll-input"  ng-model="choice" name="choice">
+              <option ng-repeat="option in poll.options" value="{{option.option}}">{{option.option}}</option>
+              <option ng-if="poll.customOption" value="customOption">Create your own...</option>
+            </select>
+          </div>
+          <div class="row poll-input-group">
+            <input class="col-xs-10 poll-input" ng-if="choice === 'customOption'" type="text" ng-model="user.option" name="cusomOption"/>
+          </div>
+          <div class="row poll-input-group">
+            <button class="col-xs-10 poll-btn" ng-disabled="user.voted || voteForm.choice.$pristine || (!voteForm.choice.$pristine && voteForm.cusomOption.$pristine)" ng-click="vote()"> VOTE</button>
+          </div>
+        </form>
       </div>
-      <button class="col-xs-10 poll-btn" ng-disabled="user.voted" ng-click="vote()"> VOTE</button>
-    </div>
-    <div class="col-sm-6" ng-class="{ 'glass': !user.voted }">
-      <p ng-if="!user.voted" class="glass-text">
-        Vote
-        For
-        Results
-      </p>
-      <canvas id="pie" 
-        class="chart chart-pie"
-        chart-data="data" 
-        chart-labels="labels" 
-        chart-options="options">
-      </canvas> 
-      <!--<p ng-if="user.voted" ng-repeat="option in poll.options">{{option.option}} | Votes = {{option.votes}}</option>-->
-    </div>
+      <div class="col-sm-6" ng-class="{ 'glass': !user.voted && poll.creatorId !== currentUser._id }">
+        <p ng-if="!user.voted && poll.creatorId !== currentUser._id" class="glass-text">
+          Vote
+          For
+          Results
+        </p>
+        <canvas id="pie" 
+          class="chart chart-pie"
+          chart-data="data" 
+          chart-labels="labels" 
+          chart-options="options">
+        </canvas> 
+      </div>
   </div>
+  </div>
+  <button ng-show="poll.creatorId === currentUser._id && poll.creatorId !== undefined" ng-click="deletePoll()" class=" btn-block btn-danger">Delete Poll</button>
 </div>
