@@ -1,9 +1,49 @@
-<h1>Profile</h1>
-
-<h3>User: {{ currentUser.facebook.name || currentUser.twitter.name || currentUser.firstName +" "+ currentUser.lastName }}</h3>
-
-<div data-ng-init="getMyPolls()">
-  <div ng-repeat="poll in polls">
-    <button ng-click="customNavigate(poll._id)">{{poll}}</button>
+<div class="row" data-ng-init="getMyPolls()">
+  <div class="col-sm-2 col-sm-offset-1 container text-center">
+	  <div class="row hideOverflow">
+	  	<h3>{{ currentUser.firstName +" "+ currentUser.lastName || currentUser.facebook.name || currentUser.twitter.name }}</h3>
+	  </div>
+	  <div class="row">
+	  	<button type="button" ng-model="selection" ng-click="selection='Polls'" class="btn btn-success">Polls</button>
+	  </div>
+	  <div class="row">
+	  	<button type="button" ng-model="selection" ng-click="selection='edit'" class="btn btn-success">Edit Profile</button>
+	  </div>
+  </div>
+  <div class="col-sm-7 col-sm-offset-1 container" ng-switch on="selection">
+	  <div ng-switch-default>
+	  	<h2>you have created {{polls.length}} polls</h2>
+	  	<h3 class="text-center col-xs-2">Votes</h3>
+	    <h3 class="text-center col-xs-10">titles</h3>
+	    <div ng-repeat="poll in polls | orderByVotes | searchPolls:searchString">
+	      <button type="button" class="btn-poll btn-block" ng-click="customNavigate(poll._id)">
+	        <label class="col-xs-2 control-label">{{totalVotes(poll.options)}}</label>
+	        <label class="col-xs-10">{{poll.title}}</label>
+	      </button>
+	    </div>
+	  </div>
+    <div ng-switch-when="edit">
+    	<ng-form name="updateForm" role="form">
+          <div class="form-group row" ng-repeat="param in userParams">
+          <label class="col-sm-3 control-label">{{param.label}}</label>
+          <div class="col-sm-8">
+            <input 
+              type="{{param.type}}"
+              name="{{param.name}}"
+              ng-model="user[param.name]"
+              class="form-control"
+              placeholder="{{param.placeholder}}" />
+          </div>
+          <div class="col-sm-9 col-sm-offset-3 help-block" ng-show="updateForm[param.name].$invalid">
+            <small>{{param.helpMessage}}</small>
+          </div>
+        </div>
+        <hr />
+        <div class="col-sm-12 controls">
+          <button type="submit" ng-disabled="updateForm.$invalid" ng-click="updateUser()" class="btn-block btn-default">Update Profile</button>
+           <button type="submit" ng-click="deleteUser()" class="btn-danger">Delete Profile</button>
+        </div> 
+      </form>
+    </div>
   </div>
 </div>

@@ -81,12 +81,29 @@ app.controller("HomeCtrl", function($rootScope, $scope, $http, $location, VoteSv
     };
 });
 
-app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location) {
+app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location, VoteSvc) {
+  $scope.userParams = VoteSvc.createUser();
+  $scope.user = {};
+
   $scope.getMyPolls = function() {
     $http.get('/api/'+ $rootScope.currentUser._id +'/polls')
       .success(function(response) {
         $scope.polls = response;
       });
+  };
+
+  $scope.deleteUser = function(){
+    //TODO: need to wire backend
+    console.log($rootScope.currentUser);
+  };
+
+  $scope.updateUser = function(){
+    //TODO: need to wire backend
+    console.log($scope.user);
+  };
+
+  $scope.totalVotes = function(options) {
+    return VoteSvc.getTotal(options);
   };
   
   $scope.customNavigate=function(id){

@@ -1,7 +1,7 @@
 /* global $ angular */
 'use strict';
 
-var app = angular.module("VotingApp", ["ngRoute", "chart.js"]);
+var app = angular.module("VotingApp", ["ngRoute", "chart.js", "ngAnimate"]);
 
 app.config(function($routeProvider, ChartJsProvider ) {
   
