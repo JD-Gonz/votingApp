@@ -1,7 +1,7 @@
 /* global $ angular */
 'use strict';
 
-var app = angular.module("VotingApp", ["ngRoute", "chart.js", "ngAnimate"]);
+var app = angular.module("VotingApp", ["ngRoute", "chart.js"]);
 
 app.config(function($routeProvider, ChartJsProvider ) {
   
@@ -38,9 +38,8 @@ app.config(function($routeProvider, ChartJsProvider ) {
     })
     .otherwise({
       redirectTo: '/'
-    });
-    
-  ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+    });  
+  ChartJsProvider.setOptions({ colors : [ '#0075e2', '#0ce3ff', '#95fed0', '#bbee9e', '#e0de6d', '#ffa391', '#cf5f3b'] });
 });
 
 var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {

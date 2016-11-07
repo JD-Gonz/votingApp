@@ -33,10 +33,14 @@ module.exports = function(app, passport) {
   app.route('/api/:id/polls')
   	.get(isLoggedIn, dbHandler.getUserPolls)
   	.post(isLoggedIn, dbHandler.addPoll);
+  	
+	app.route('/api/user/:id')
+  	.put(isLoggedIn, dbHandler.updateUser)
+  	.delete(isLoggedIn, dbHandler.deleteUser);
   
   app.route('/api/poll/:id')
   	.get(dbHandler.getPoll)
-  	.post(dbHandler.updatePoll)
+  	.put(dbHandler.updatePoll)
   	.delete(isLoggedIn, dbHandler.deletePoll);
   
   app.get('/auth/facebook', function authenticateFacebook (req, res, next) {

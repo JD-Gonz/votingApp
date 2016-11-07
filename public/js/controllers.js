@@ -92,16 +92,21 @@ app.controller("ProfileCtrl", function($rootScope, $scope, $http, $location, Vot
       });
   };
 
-  $scope.deleteUser = function(){
-    //TODO: need to wire backend
-    console.log($rootScope.currentUser);
-  };
-
   $scope.updateUser = function(){
-    //TODO: need to wire backend
-    console.log($scope.user);
+    $http.put('/api/user/' + $rootScope.currentUser._id, VoteSvc.removeEmptyFields($scope.user))
+      .success(function(response) {
+        $rootScope.currentUser = response;
+      });
   };
 
+  $scope.deleteUser = function(){
+    $http.delete('/api/user/' + $rootScope.currentUser._id)
+      .success(function(response) {
+        $rootScope.currentUser = null;
+        $location.url("/");
+      });
+  };
+  
   $scope.totalVotes = function(options) {
     return VoteSvc.getTotal(options);
   };
@@ -145,7 +150,7 @@ app.controller("PollCtrl", function( $scope, $http, $location, $routeParams, Vot
   
   $scope.vote = function() {
     $scope.poll = VoteSvc.vote($scope.poll, $scope.choice, $scope.user.option);
-    $http.post('/api/poll/' + $routeParams.id,  $scope.poll)
+    $http.put('/api/poll/' + $routeParams.id,  $scope.poll)
       .success(function(response) {
         $scope.poll = VoteSvc.setChartValues(response);
         $scope.labels = VoteSvc.getLabels();

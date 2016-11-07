@@ -74,8 +74,8 @@ function DBHandler () {
 	      } else {
 	        var newUser = new User();
 	        newUser.email = req.body.email.toLowerCase();
-	        newUser.firstName = req.body.fName;
-	        newUser.lastName = req.body.lName;
+	        newUser.firstName = req.body.firstName;
+	        newUser.lastName = req.body.lastName;
 	        newUser.password = newUser.generateHash(req.body.password);
 	        newUser.save(function(err, user) {
 	          if (err) {return err;}
@@ -88,7 +88,30 @@ function DBHandler () {
 	        });
       	}
     	});
-  }; 
+  };
+  
+  this.updateUser = function (req, res) {
+		User
+			.findOneAndUpdate({ '_id': req.params.id }, {$set: {
+				'email': req.body.email.toLowerCase(),
+        'firstName': req.body.firstName,
+        'lastName': req.body.lastName
+			}}, {new: true})
+			.exec(function (err, result) {
+					if (err) { throw err; }
+					res.json(result);
+			});
+	};
+	
+	this.deleteUser = function (req, res) {
+		req.logOut();
+		User
+			.findOneAndRemove({ '_id': req.params.id })
+			.exec(function (err, result) {
+					if (err) { throw err; }
+					res.json(result);
+			});
+	};
 }
 
 module.exports = DBHandler;

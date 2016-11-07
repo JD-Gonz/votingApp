@@ -4,10 +4,10 @@
 app.factory("VoteSvc", function() {
   var userParams = [
   {name:"email", type:"email", label:"Email", placeholder:"Email", helpMessage:"A valid email is required.", icon:"glyphicon glyphicon-user"}, 
-  {name:"fName", type:"text", label:"First Name", placeholder:"First Name", helpMessage:"Your first name is required!"}, 
-  {name:"lName", type:"text", label:"Last Name", placeholder:"Last Name", helpMessage:"Your last name is required!"}, 
+  {name:"firstName", type:"text", label:"First Name", placeholder:"First Name", helpMessage:"Your first name is required!"}, 
+  {name:"lastName", type:"text", label:"Last Name", placeholder:"Last Name", helpMessage:"Your last name is required!"}, 
   {name:"password", type:"password", label:"Password", placeholder:"Password", helpMessage:"Your password is required!", icon:"glyphicon glyphicon-lock"}, 
-  {name:"password2", type:"password", label:"Password", placeholder:"Confirm Password", helpMessage:"Please confirm  your password."}];
+  {name:"password2", type:"password", label:"Retype Password", placeholder:"Confirm Password", helpMessage:"Please confirm  your password."}];
   
   var pollData = [];
     
@@ -73,6 +73,16 @@ app.factory("VoteSvc", function() {
     return total;
   };
   
+  this.removeEmptyFields = function(user) {
+    var newInput = {};
+    angular.forEach(user, function(value, key) {
+      if (value.length > 0) {
+        newInput[key] = value;
+      }
+    });
+    return newInput;
+  };
+  
   return {
       vote: this.vote,
       setChartValues: this.setChartValues,
@@ -81,6 +91,7 @@ app.factory("VoteSvc", function() {
       createUser: this.createUser,
       getUser: this.getUser,
       createOptions: this.createOptions,
+      removeEmptyFields: this.removeEmptyFields,
       getTotal: this.getTotal
   };
 });

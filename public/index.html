@@ -10,12 +10,14 @@
 	<body>
 		
 		<div ng-include="'./views/header.html'" ng-controller="NavCtrl"></div>
-		<div ng-view></div>
+		
+		<div ng-cloak ng-view></div>
+		
+		<div ng-include="'./views/footer.html'" ng-controller="NavCtrl"></div>
 		
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
 		<script type="text/javascript" src="https://code.angularjs.org/1.5.8/angular-route.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/angular.chartjs/1.0.3/angular-chart.min.js"></script>
