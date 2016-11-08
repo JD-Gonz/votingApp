@@ -5,7 +5,6 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
-var dotenv = require('dotenv');
 var routes = require('./app/routes.js');
 var mongoose = require("mongoose");
 
@@ -33,8 +32,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-dotenv.load();
 
 routes(app, passport);
 
