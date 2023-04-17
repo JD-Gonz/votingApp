@@ -7,33 +7,33 @@ app.config(function($routeProvider, ChartJsProvider ) {
   
   $routeProvider
     .when('/', {
-      templateUrl: 'views/home.html',
+      templateUrl: 'public/views/home.html',
       controller: 'HomeCtrl'
     })
     .when('/profile', {
-      templateUrl: 'views/profile.html',
+      templateUrl: 'public/views/profile.html',
       controller: 'ProfileCtrl',
       resolve: {
         logincheck: checkLoggedin
       }
     })
     .when('/login', {
-      templateUrl: 'views/login.html',
+      templateUrl: 'public/views/login.html',
       controller: 'LoginCtrl'
     })
     .when('/signup', {
-      templateUrl: 'views/signup.html',
+      templateUrl: 'public/views/signup.html',
       controller: 'SignUpCtrl'
     })
     .when('/newpoll', {
-      templateUrl: 'views/newPoll.html',
+      templateUrl: 'public/views/newPoll.html',
       controller: 'NewPollCtrl',
       resolve: {
         logincheck: checkLoggedin
       }
     })
     .when('/polls/:id', {
-      templateUrl: 'views/poll.html',
+      templateUrl: 'public/views/poll.html',
       controller: 'PollCtrl'
     })
     .otherwise({
