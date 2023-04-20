@@ -23,12 +23,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dgonz001/votingApp.git"
+    "url": "git+https://github.com/jd-gonz/votingApp.git"
   },
   "author": "JD Gonzalez",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dgonz001/votingApp/issues"
+    "url": "https://github.com/jd-gonz/votingApp/issues"
   },
-  "homepage": "https://github.com/dgonz001/votingApp#readme"
+  "homepage": "https://github.com/jd-gonz/votingApp#readme"
 }
